@@ -14,7 +14,10 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "camelcase": "off",
     "require-jsdoc": "off",
-    "react/react-in-jsx-scope": "off"
+    "no-unused-vars": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": "error"
   }
 }
