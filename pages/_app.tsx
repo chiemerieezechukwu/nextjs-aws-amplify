@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Amplify } from "aws-amplify";
+import { AlertProvider } from "../contexts/AlertProvider";
 
 Amplify.configure({
   Auth: {
@@ -12,9 +13,11 @@ Amplify.configure({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    // Container here
+    // TODO: Container here
     <div>
-      <Component {...pageProps} />
+      <AlertProvider>
+        <Component {...pageProps} />
+      </AlertProvider>
     </div>
   );
 }

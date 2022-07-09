@@ -9,6 +9,8 @@ import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { useState } from "react";
+import { useAlertContext } from "../contexts/AlertProvider";
+import { AlertSeverity } from "../types/alert";
 
 interface ISignUpFormInput {
   email: string;
@@ -19,19 +21,17 @@ interface ISignUpFormInput {
 interface ISignUpFormProps {
   setUserData: (userData: IUserData) => void;
   setSignUpStage: (stage: AuthState) => void;
-  setErrorMessage: (message: string | null) => void;
-  setOpenAlert: (open: boolean) => void;
 }
 
 export default function SignUpForm(props: ISignUpFormProps) {
   const [showPassword, setShowPassword] = useState(false);
-  const { setUserData, setSignUpStage, setErrorMessage, setOpenAlert } = props;
-
+  const { setUserData, setSignUpStage } = props;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ISignUpFormInput>();
+  const { setAlertData } = useAlertContext();
 
   const onSignUpSubmit = handleSubmit(async (data) => {
     const { email, preferred_username, password } = data;
@@ -51,19 +51,28 @@ export default function SignUpForm(props: ISignUpFormProps) {
       if (error instanceof Error) {
         switch (error.name) {
           case "UsernameExistsException":
-            setErrorMessage("Email address is already in use");
-            setOpenAlert(true);
+            setAlertData({
+              open: true,
+              message: "Email address is already in use",
+              severity: AlertSeverity.ERROR,
+            });
             break;
 
-          // A lambda function is used to check the uniqueness of the username
+          // Error from the lambda function used to check the uniqueness of the username
           case "UserLambdaValidationException":
-            setErrorMessage("Username is already in use");
-            setOpenAlert(true);
+            setAlertData({
+              open: true,
+              message: "Username is already in use",
+              severity: AlertSeverity.ERROR,
+            });
             break;
 
           default:
-            setErrorMessage(error.message);
-            setOpenAlert(true);
+            setAlertData({
+              open: true,
+              message: error.message,
+              severity: AlertSeverity.ERROR,
+            });
             break;
         }
       }
@@ -79,85 +88,89 @@ export default function SignUpForm(props: ISignUpFormProps) {
   };
 
   return (
-    <Form onSubmit={onSignUpSubmit} noValidate>
-      <Input
-        id="email"
-        label="Email"
-        type="email"
-        error={errors.email ? true : false}
-        helperText={errors.email && errors.email.message}
-        register={{
-          ...register("email", {
-            required: { value: true, message: "Email is required" },
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              message: "Invalid email address",
-            },
-          }),
-        }}
-      />
+    <>
+      <div>Sign Up</div>
 
-      <Input
-        id="username"
-        label="Username"
-        type="text"
-        error={errors.preferred_username ? true : false}
-        helperText={
-          errors.preferred_username && errors.preferred_username.message
-        }
-        register={{
-          ...register("preferred_username", {
-            required: { value: true, message: "Username is required" },
-          }),
-        }}
-      />
+      <Form onSubmit={onSignUpSubmit} noValidate>
+        <Input
+          id="email"
+          label="Email"
+          type="email"
+          error={errors.email ? true : false}
+          helperText={errors.email && errors.email.message}
+          register={{
+            ...register("email", {
+              required: { value: true, message: "Email is required" },
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "Invalid email address",
+              },
+            }),
+          }}
+        />
 
-      <Input
-        id="password"
-        label="Password"
-        type={showPassword ? "text" : "password"}
-        error={errors.password ? true : false}
-        helperText={errors.password && errors.password.message}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        register={{
-          ...register("password", {
-            required: { value: true, message: "Password is required" },
-            minLength: {
-              value: 8,
-              message: "Password must be at least 8 characters",
-            },
-            validate: {
-              hasLowerCase: (value) =>
-                matchRegex(/(?=.*[a-z])/, value) ||
-                "Password must contain at least one lowercase letter",
-              hasUpperCase: (value) =>
-                matchRegex(/(?=.*[A-Z])/, value) ||
-                "Password must contain at least one uppercase letter",
-              hasNumber: (value) =>
-                matchRegex(/(?=.*[0-9])/, value) ||
-                "Password must contain at least one number",
-              hasSpecialChar: (value) =>
-                matchRegex(/(?=.*[!@#$%^&*])/, value) ||
-                "Password must contain at least one special character",
-            },
-          }),
-        }}
-      />
+        <Input
+          id="username"
+          label="Username"
+          type="text"
+          error={errors.preferred_username ? true : false}
+          helperText={
+            errors.preferred_username && errors.preferred_username.message
+          }
+          register={{
+            ...register("preferred_username", {
+              required: { value: true, message: "Username is required" },
+            }),
+          }}
+        />
 
-      <Button type="submit">Sign Up</Button>
-    </Form>
+        <Input
+          id="password"
+          label="Password"
+          type={showPassword ? "text" : "password"}
+          error={errors.password ? true : false}
+          helperText={errors.password && errors.password.message}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          register={{
+            ...register("password", {
+              required: { value: true, message: "Password is required" },
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+              validate: {
+                hasLowerCase: (value) =>
+                  matchRegex(/(?=.*[a-z])/, value) ||
+                  "Password must contain at least one lowercase letter",
+                hasUpperCase: (value) =>
+                  matchRegex(/(?=.*[A-Z])/, value) ||
+                  "Password must contain at least one uppercase letter",
+                hasNumber: (value) =>
+                  matchRegex(/(?=.*[0-9])/, value) ||
+                  "Password must contain at least one number",
+                hasSpecialChar: (value) =>
+                  matchRegex(/(?=.*[!@#$%^&*])/, value) ||
+                  "Password must contain at least one special character",
+              },
+            }),
+          }}
+        />
+
+        <Button type="submit">Sign Up</Button>
+      </Form>
+    </>
   );
 }

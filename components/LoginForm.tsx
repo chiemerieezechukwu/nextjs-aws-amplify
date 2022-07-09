@@ -5,6 +5,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { Auth } from "aws-amplify";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAlertContext } from "../contexts/AlertProvider";
 import { AlertSeverity } from "../types/alert";
 import { AuthState, IUserData } from "../types/auth";
 import Button from "./Button";
@@ -19,9 +20,6 @@ interface ILoginFormInput {
 interface ILoginFormProps {
   setSignUpStage: (stage: AuthState) => void;
   setUserData: (userData: IUserData) => void;
-  setErrorMessage: (message: string | null) => void;
-  setOpenAlert: (open: boolean) => void;
-  setSeverity?: (severity: AlertSeverity) => void;
 }
 
 export default function LoginForm(props: ILoginFormProps) {
@@ -31,14 +29,8 @@ export default function LoginForm(props: ILoginFormProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<ILoginFormInput>();
-
-  const {
-    setSignUpStage,
-    setUserData,
-    setErrorMessage,
-    setOpenAlert,
-    setSeverity,
-  } = props;
+  const { setSignUpStage, setUserData } = props;
+  const { setAlertData } = useAlertContext();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
@@ -54,18 +46,32 @@ export default function LoginForm(props: ILoginFormProps) {
             setUserData({ email });
             setSignUpStage(AuthState.CONFIRM_SIGN_UP);
 
-            setErrorMessage("Please confirm your email address");
-            if (setSeverity) setSeverity("warning");
-            setOpenAlert(true);
+            setAlertData({
+              open: true,
+              message: "Please confirm your email address",
+              severity: AlertSeverity.WARNING,
+            });
             break;
 
           case "NotAuthorizedException":
-            setErrorMessage("Invalid email or password");
-            setOpenAlert(true);
+            setSignUpStage(AuthState.LOGIN);
+
+            setAlertData({
+              open: true,
+              message: "Invalid email or password",
+              severity: AlertSeverity.ERROR,
+            });
             break;
 
           default:
-            throw error;
+            setSignUpStage(AuthState.LOGIN);
+
+            setAlertData({
+              open: true,
+              message: error.message,
+              severity: AlertSeverity.ERROR,
+            });
+            break;
         }
       }
     }
@@ -75,6 +81,8 @@ export default function LoginForm(props: ILoginFormProps) {
 
   return (
     <>
+      <div>Login</div>
+
       <Form onSubmit={onSubmit}>
         <Input
           id="email"

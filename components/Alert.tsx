@@ -1,17 +1,11 @@
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import { useAlertContext } from "../contexts/AlertProvider";
 import { AlertSeverity } from "../types/alert";
 
-interface IPopUpAlertProps {
-  openAlert: boolean;
-  message: string | null;
-  setOpenAlert: (open: boolean) => void;
-  severity?: AlertSeverity;
-  setSeverity?: (severity: AlertSeverity) => void;
-}
-
-export default function PopUpAlert(props: IPopUpAlertProps) {
-  const { openAlert, message, setOpenAlert, severity, setSeverity } = props;
+export default function PopUpAlert() {
+  const { alertData, setAlertData } = useAlertContext();
+  const { open, message, severity } = alertData;
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
@@ -20,18 +14,18 @@ export default function PopUpAlert(props: IPopUpAlertProps) {
     if (reason === "clickaway") {
       return;
     }
-    setOpenAlert(false);
-    if (setSeverity) setSeverity("error");
+
+    setAlertData({ ...alertData, open: false, severity: AlertSeverity.ERROR });
   };
 
   return (
     <Snackbar
-      open={openAlert}
+      open={open}
       autoHideDuration={6000}
       onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
-      <Alert onClose={handleClose} severity={severity || "error"}>
+      <Alert onClose={handleClose} severity={severity}>
         {message}
       </Alert>
     </Snackbar>

@@ -7,30 +7,6 @@ import PopUpAlert from "../components/Alert";
 export default function SignUp() {
   const [signUpStage, setSignUpStage] = useState<string | null>(null);
   const [userData, setUserData] = useState({} as IUserData);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [openAlert, setOpenAlert] = useState(false);
-
-  const renderForms = () => {
-    switch (signUpStage) {
-      case AuthState.CONFIRM_SIGN_UP:
-        return (
-          <ConfirmSignUpForm
-            userData={userData}
-            setSignUpStage={setSignUpStage}
-          />
-        );
-
-      default:
-        return (
-          <SignUpForm
-            setUserData={setUserData}
-            setSignUpStage={setSignUpStage}
-            setErrorMessage={setErrorMessage}
-            setOpenAlert={setOpenAlert}
-          />
-        );
-    }
-  };
 
   return (
     <>
@@ -40,16 +16,30 @@ export default function SignUp() {
           minHeight: "100vh",
           justifyContent: "center",
           alignItems: "center",
+          flexDirection: "column",
         }}
       >
-        <PopUpAlert
-          openAlert={openAlert}
-          message={errorMessage}
-          setOpenAlert={setOpenAlert}
-          severity="error"
-        />
+        {(() => {
+          switch (signUpStage) {
+            case AuthState.CONFIRM_SIGN_UP:
+              return (
+                <ConfirmSignUpForm
+                  userData={userData}
+                  setSignUpStage={setSignUpStage}
+                />
+              );
 
-        {renderForms()}
+            default:
+              return (
+                <SignUpForm
+                  setUserData={setUserData}
+                  setSignUpStage={setSignUpStage}
+                />
+              );
+          }
+        })()}
+
+        <PopUpAlert />
       </main>
     </>
   );
