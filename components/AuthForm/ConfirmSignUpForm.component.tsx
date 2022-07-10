@@ -1,12 +1,10 @@
-import Button from "./Button";
-import Input from "./Input";
-import Form from "./Form";
+import { Button, Input, Form } from "~/components";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
 import { useRouter } from "next/router";
-import { AuthState } from "~/types/auth";
-import { AlertSeverity } from "~/types/alert";
-import { useAlertContext } from "~/contexts/AlertProvider";
+import { AuthState } from "~/types";
+import { AlertSeverity } from "~/types";
+import { useAlertContext } from "~/contexts";
 
 interface IConfirmSignUpFormInput {
   authCode: string;
@@ -17,7 +15,7 @@ interface IConfirmSignUpFormProps {
   setSignUpStage: (stage: AuthState) => void;
 }
 
-export default function ConfirmSignUpForm(props: IConfirmSignUpFormProps) {
+export function ConfirmSignUpForm(props: IConfirmSignUpFormProps) {
   const {
     userData: { email },
     setSignUpStage,

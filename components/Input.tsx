@@ -12,7 +12,7 @@ interface IInputProps {
   InputProps?: object;
 }
 
-export default function Input(props: IInputProps) {
+export function InputComponent(props: IInputProps) {
   const { register, ...restOfProps } = props;
 
   return (

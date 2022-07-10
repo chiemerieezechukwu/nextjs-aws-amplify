@@ -5,12 +5,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { Auth } from "aws-amplify";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAlertContext } from "~/contexts/AlertProvider";
-import { AlertSeverity } from "~/types/alert";
-import { AuthState, IUserData } from "~/types/auth";
-import Button from "./Button";
-import Form from "./Form";
-import Input from "./Input";
+import { useAlertContext } from "~/contexts";
+import { AlertSeverity } from "~/types";
+import { AuthState, IUserData } from "~/types";
+import { Button, Form, Input } from "~/components";
 
 interface ILoginFormInput {
   email: string;
@@ -22,7 +20,7 @@ interface ILoginFormProps {
   setUserData: (userData: IUserData) => void;
 }
 
-export default function LoginForm(props: ILoginFormProps) {
+export function LoginForm(props: ILoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,

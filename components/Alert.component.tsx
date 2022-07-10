@@ -1,9 +1,9 @@
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-import { useAlertContext } from "~/contexts/AlertProvider";
-import { AlertSeverity } from "~/types/alert";
+import { useAlertContext } from "~/contexts";
+import { AlertSeverity } from "~/types";
 
-export default function PopUpAlert() {
+export function AlertComponent() {
   const { alertData, setAlertData } = useAlertContext();
   const { open, message, severity } = alertData;
 

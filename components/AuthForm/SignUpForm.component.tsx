@@ -1,16 +1,14 @@
-import Button from "./Button";
-import Input from "./Input";
-import Form from "./Form";
+import { Button, Input, Form } from "~/components";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
-import { AuthState, IUserData } from "~/types/auth";
+import { AuthState, IUserData } from "~/types";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { useState } from "react";
-import { useAlertContext } from "~/contexts/AlertProvider";
-import { AlertSeverity } from "~/types/alert";
+import { useAlertContext } from "~/contexts";
+import { AlertSeverity } from "~/types";
 
 interface ISignUpFormInput {
   email: string;
@@ -23,7 +21,7 @@ interface ISignUpFormProps {
   setSignUpStage: (stage: AuthState) => void;
 }
 
-export default function SignUpForm(props: ISignUpFormProps) {
+export function SignUpForm(props: ISignUpFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const { setUserData, setSignUpStage } = props;
   const {
