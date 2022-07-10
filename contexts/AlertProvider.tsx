@@ -1,5 +1,5 @@
 import { useState, createContext, useContext } from "react";
-import { AlertSeverity, IAlert, IAlertContext } from "~/types/alert";
+import { AlertSeverity, IAlert, IAlertContext } from "~/types";
 
 interface IAlertProviderProps {
   children: React.ReactNode;
