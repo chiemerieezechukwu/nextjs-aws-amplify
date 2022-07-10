@@ -1,7 +1,7 @@
-import "../styles/globals.css";
+import "~/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Amplify } from "aws-amplify";
-import { AlertProvider } from "../contexts/AlertProvider";
+import { AlertProvider } from "~/contexts/AlertProvider";
 
 Amplify.configure({
   Auth: {

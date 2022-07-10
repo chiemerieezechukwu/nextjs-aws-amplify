@@ -1,8 +1,10 @@
 import { useState } from "react";
-import PopUpAlert from "../components/Alert";
-import ConfirmSignUpForm from "../components/ConfirmSignUpForm";
-import LoginForm from "../components/LoginForm";
-import { AuthState, IUserData } from "../types/auth";
+import api from "~/lib/axios";
+import { TournamentResource } from "~/lib/axios/resources";
+import Alert from "~/components/Alert";
+import ConfirmSignUpForm from "~/components/ConfirmSignUpForm";
+import LoginForm from "~/components/LoginForm";
+import { AuthState, IUserData } from "~/types/auth";
 
 export default function Login() {
   const [userData, setUserData] = useState({} as IUserData);
@@ -31,7 +33,7 @@ export default function Login() {
           />
         )}
 
-        <PopUpAlert />
+        <Alert />
       </main>
     </>
   );

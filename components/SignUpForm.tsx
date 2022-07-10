@@ -3,14 +3,14 @@ import Input from "./Input";
 import Form from "./Form";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
-import { AuthState, IUserData } from "../types/auth";
+import { AuthState, IUserData } from "~/types/auth";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { useState } from "react";
-import { useAlertContext } from "../contexts/AlertProvider";
-import { AlertSeverity } from "../types/alert";
+import { useAlertContext } from "~/contexts/AlertProvider";
+import { AlertSeverity } from "~/types/alert";
 
 interface ISignUpFormInput {
   email: string;

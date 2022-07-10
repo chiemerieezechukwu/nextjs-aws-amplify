@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { AuthState, IUserData } from "../types/auth";
-import ConfirmSignUpForm from "../components/ConfirmSignUpForm";
-import SignUpForm from "../components/SignUpForm";
-import PopUpAlert from "../components/Alert";
+import { AuthState, IUserData } from "~/types/auth";
+import ConfirmSignUpForm from "~/components/ConfirmSignUpForm";
+import SignUpForm from "~/components/SignUpForm";
+import Alert from "~/components/Alert";
 
 export default function SignUp() {
   const [signUpStage, setSignUpStage] = useState<string | null>(null);
@@ -39,7 +39,7 @@ export default function SignUp() {
           }
         })()}
 
-        <PopUpAlert />
+        <Alert />
       </main>
     </>
   );

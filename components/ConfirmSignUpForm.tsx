@@ -4,9 +4,9 @@ import Form from "./Form";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
 import { useRouter } from "next/router";
-import { AuthState } from "../types/auth";
-import { AlertSeverity } from "../types/alert";
-import { useAlertContext } from "../contexts/AlertProvider";
+import { AuthState } from "~/types/auth";
+import { AlertSeverity } from "~/types/alert";
+import { useAlertContext } from "~/contexts/AlertProvider";
 
 interface IConfirmSignUpFormInput {
   authCode: string;
