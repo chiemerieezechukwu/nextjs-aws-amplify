@@ -13,7 +13,7 @@ export default function SignUp() {
         switch (signUpStage) {
           case AuthState.CONFIRM_SIGN_UP:
             return (
-              <AuthForm.ConfirmSignUpForm
+              <AuthForm.ConfirmSignUp
                 userData={userData}
                 setSignUpStage={setSignUpStage}
               />
@@ -21,7 +21,7 @@ export default function SignUp() {
 
           default:
             return (
-              <AuthForm.SignUpForm
+              <AuthForm.SignUp
                 setUserData={setUserData}
                 setSignUpStage={setSignUpStage}
               />
