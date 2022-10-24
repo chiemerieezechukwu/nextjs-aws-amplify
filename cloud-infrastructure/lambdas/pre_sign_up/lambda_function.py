@@ -1,6 +1,7 @@
-from custom_logger import logger
+from custom_logger import get_logger
 import boto3
 
+logger = get_logger(service="pre_sign_up")
 cognito_client = boto3.client("cognito-idp")
 
 

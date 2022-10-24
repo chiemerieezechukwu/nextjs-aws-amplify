@@ -30,6 +30,9 @@ export function LoginForm(props: ILoginFormProps) {
   const { setSignUpStage, setUserData } = props;
   const { setAlertData } = useAlertContext();
 
+
+  Auth.currentAuthenticatedUser().then(user => console.log(user))
+
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
     const { email, password } = data;
@@ -79,7 +82,7 @@ export function LoginForm(props: ILoginFormProps) {
 
   return (
     <>
-      <div>Login</div>
+      <h2>Login</h2>
 
       <Form onSubmit={onSubmit}>
         <Input
@@ -124,7 +127,7 @@ export function LoginForm(props: ILoginFormProps) {
           }}
         />
 
-        <Button type="submit">Login</Button>
+        <Button type="submit" className="mt-2" >Login</Button>
       </Form>
     </>
   );

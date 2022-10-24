@@ -5,7 +5,7 @@ import { AlertProvider } from "~/contexts";
 
 Amplify.configure({
   Auth: {
-    region: "eu-central-1", // TODO make this configurable
+    region: "eu-central-1", // TODO make this configurable: get from terraform outputs
     userPoolId: "eu-central-1_pYusvM5KP",
     userPoolWebClientId: "6rtceplgsg7hjghgiupikq6lr2",
   },

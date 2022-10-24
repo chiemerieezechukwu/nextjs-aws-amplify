@@ -1,4 +1,4 @@
 export const apiBaseEndpoints = {
-  dev: "http://localhost:8000/api/",
-  prod: "https://api.example.com/api/", // TODO: replace with real url
+  development: "http://localhost:8000/api/",
+  production: "https://api.example.com/api/", // TODO: replace with real url
 };

@@ -84,7 +84,7 @@ export function ConfirmSignUpForm(props: IConfirmSignUpFormProps) {
 
   return (
     <>
-      <div>Confirm Your Account</div>
+      <h2>Confirm Your Account</h2>
 
       <Form onSubmit={onSignUpConfirmSubmit}>
         <Input
@@ -111,7 +111,7 @@ export function ConfirmSignUpForm(props: IConfirmSignUpFormProps) {
           }}
         />
 
-        <Button type="submit">Confirm</Button>
+        <Button type="submit" className="mt-2" >Confirm</Button>
       </Form>
     </>
   );

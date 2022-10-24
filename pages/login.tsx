@@ -1,16 +1,16 @@
 import { useState } from "react";
-import api from "~/lib/axios";
+import api_client from "~/lib/axios";
 import { TournamentResource } from "~/lib/axios/resources";
 import { Alert, AuthForm } from "~/components";
 import { AuthState, IUserData } from "~/types";
-import { Layout } from "~/layouts";
+import { Layout } from "~//layouts";
 
 export default function Login() {
   const [userData, setUserData] = useState({} as IUserData);
   const [signUpStage, setSignUpStage] = useState<string | null>(null);
 
   (async () => {
-    const res = await api.get(TournamentResource.TOURNAMENTS);
+    const res = await api_client.get(TournamentResource.TOURNAMENTS);
     console.log(res.data);
   })();
 

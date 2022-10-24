@@ -87,7 +87,7 @@ export function SignUpForm(props: ISignUpFormProps) {
 
   return (
     <>
-      <div>Sign Up</div>
+      <h2>Sign Up</h2>
 
       <Form onSubmit={onSignUpSubmit} noValidate>
         <Input
@@ -167,7 +167,7 @@ export function SignUpForm(props: ISignUpFormProps) {
           }}
         />
 
-        <Button type="submit">Sign Up</Button>
+        <Button type="submit" className="mt-2" >Sign Up</Button>
       </Form>
     </>
   );

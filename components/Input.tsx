@@ -18,7 +18,6 @@ export function InputComponent(props: IInputProps) {
   return (
     <TextField
       fullWidth
-      className="mb-6"
       variant="filled"
       margin="dense"
       size="small"
